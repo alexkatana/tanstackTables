@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["vite/client", "react", "react-dom"],
+    "verbatimModuleSyntax": false
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
+
+
+
