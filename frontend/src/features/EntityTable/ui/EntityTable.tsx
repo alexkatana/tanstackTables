@@ -89,7 +89,7 @@ export const EntityTable: React.FC = () => {
         </Button>
       ),
     },
-    
+
   ];
 
   if (isLoading) return <div>Loading...</div>;
