@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { EntitiesPage } from '../pages/EntitiesPage';
 import { EntityEditPage } from '../pages/EntityEditPage';
+
 export const App = () => {
   return (
     <BrowserRouter>

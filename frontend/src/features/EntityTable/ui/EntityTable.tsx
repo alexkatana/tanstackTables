@@ -6,6 +6,7 @@ import { Button, Input, Select, Space, Table } from 'antd';
 import type { TableColumnsType } from 'antd';
 
 export const EntityTable: React.FC = () => {
+
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<Partial<Entity>>({});
@@ -13,6 +14,7 @@ export const EntityTable: React.FC = () => {
     queryKey: ['entities'],
     queryFn: () => apiClient.get('/entities').then(res => res.data),
   });
+
   const { mutate: updateEntity } = useMutation({
     mutationFn: (entity: Entity) => 
       apiClient.put(`/entities/${entity.id}`, entity),
@@ -21,6 +23,7 @@ export const EntityTable: React.FC = () => {
       setEditingId(null);
     },
   });
+
   const columns: TableColumnsType<Entity> = [
     {
       title: 'ID',
@@ -28,6 +31,7 @@ export const EntityTable: React.FC = () => {
       key: 'id',
       width: 80,
     },
+
     {
       title: 'Name',
       dataIndex: 'name',
@@ -39,6 +43,7 @@ export const EntityTable: React.FC = () => {
         />
       ) : text,
     },
+
     {
       title: 'Status',
       dataIndex: 'status',
@@ -57,6 +62,7 @@ export const EntityTable: React.FC = () => {
         <span className={`status-${text}`}>{text}</span>
       ),
     },
+
     {
       title: 'Actions',
       key: 'actions',
@@ -83,6 +89,7 @@ export const EntityTable: React.FC = () => {
         </Button>
       ),
     },
+    
   ];
 
   if (isLoading) return <div>Loading...</div>;

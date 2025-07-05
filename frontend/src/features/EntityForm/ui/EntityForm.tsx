@@ -3,6 +3,7 @@ import type { EntityFormValues } from '../model/types';
 import { apiClient } from '../../../shared/api/client';
 import { signal } from '@preact/signals-react';
 const loading = signal(false)
+
 export const EntityForm = ({ entity }: { entity?: EntityFormValues & { id?: number } }) => {
   const [form] = Form.useForm();
 
@@ -18,6 +19,7 @@ export const EntityForm = ({ entity }: { entity?: EntityFormValues & { id?: numb
       loading.value = false;
     }
   };
+  
   return (
     <Form form={form} initialValues={entity} onFinish={onFinish}>
       <Form.Item name="name" label="Name" rules={[{ required: true }]}>
