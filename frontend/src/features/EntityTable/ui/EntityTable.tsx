@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../../../shared/api/client';
-import type { Entity } from '../../../entities/entity/model/types';
+import type { Entity } from '../../../entities/BookCrawler/model/types';
 import { Button, Input, Select, Space, Table } from 'antd';
 import type { TableColumnsType } from 'antd';
 
