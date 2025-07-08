@@ -1,4 +1,5 @@
-import type { Entity } from '../../../entities/entity/model/types';
+import type { Entity } from '../../../entities/BookCrawler/model/types';
+
 export interface TableColumn {
   id: keyof Entity | string;
   header: string;
