@@ -1,0 +1,1 @@
+export {EntityTable } from './ui/EntityTable'
