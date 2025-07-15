@@ -1,4 +1,4 @@
-import { EntityTable } from "../../features/EntityTable/index.ts";
+import { EntityTable } from "../../entities/EntityTable/index.ts";
 import styles from "./styles.module.scss"
 
 export const EntitiesPage = () => (

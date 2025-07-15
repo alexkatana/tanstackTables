@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiClient } from '../../../shared/api/client';
+import { apiClient } from '@/shared/api/client';
 import type { Entity } from '../../../entities/BookCrawler/model/types';
 import { Button, Input, Select, Space, Table } from 'antd';
 import type { TableColumnsType } from 'antd';
+import { Link } from 'react-router-dom';
 
 export const EntityTable: React.FC = () => {
-
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<Partial<Entity>>({});
+
   const { data, isLoading } = useQuery<{ data: Entity[] }>({
     queryKey: ['entities'],
     queryFn: () => apiClient.get('/entities').then(res => res.data),
@@ -31,7 +32,6 @@ export const EntityTable: React.FC = () => {
       key: 'id',
       width: 80,
     },
-
     {
       title: 'Name',
       dataIndex: 'name',
@@ -43,7 +43,6 @@ export const EntityTable: React.FC = () => {
         />
       ) : text,
     },
-
     {
       title: 'Status',
       dataIndex: 'status',
@@ -62,34 +61,32 @@ export const EntityTable: React.FC = () => {
         <span className={`status-${text}`}>{text}</span>
       ),
     },
-
     {
       title: 'Actions',
       key: 'actions',
-      width: 150,
-      render: (_, record) => editingId === record.id ? (
-        <Space>
-          <Button
-            type="primary"
-            size="small"
-            onClick={() => updateEntity({ ...record, ...editForm })}
-          >
-            Save
-          </Button>
-          <Button size="small" onClick={() => setEditingId(null)}>
-            Cancel
-          </Button>
+      render: (_, record) => (
+        <Space size="middle">
+          {editingId === record.id ? (
+            <>
+              <Button 
+                type="primary" 
+                onClick={() => updateEntity({ ...record, ...editForm } as Entity)}
+              >
+                Save
+              </Button>
+              <Button onClick={() => setEditingId(null)}>Cancel</Button>
+            </>
+          ) : (
+            <>
+              <Button onClick={() => setEditingId(record.id)}>Edit</Button>
+              <Link to={`/edit/${record.id}`}>
+                <Button>Full Edit</Button>
+              </Link>
+            </>
+          )}
         </Space>
-      ) : (
-        <Button size="small" onClick={() => {
-          setEditingId(record.id);
-          setEditForm({ name: record.name, status: record.status });
-        }}>
-          Edit
-        </Button>
       ),
     },
-
   ];
 
   if (isLoading) return <div>Loading...</div>;

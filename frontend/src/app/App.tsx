@@ -1,16 +1,18 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { EntitiesPage } from '../pages/EntitiesPage/index.ts';
-import { EntityEditPage } from '../pages/EntityEditPage/index.ts'; // ../pages/EntityEditPage
-// import { EntityEditPage } from '@/pages/EntityEditPage';
-// первая попытка - не работает через алиас, пошел делать вторую попытку
+import { AppLayout } from '../widgets/Layout/ui/Layout';
+import { EntitiesPage } from '../pages/EntitiesPage';
+import { EntityEditPage } from '../pages/EntityEditPage';
+
 export const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<EntitiesPage />} />
-        <Route path="/edit/:id" element={<EntityEditPage />} />
-        <Route path="/create" element={<EntityEditPage />} />
-      </Routes>
+      <AppLayout>
+        <Routes>
+          <Route path="/" element={<EntitiesPage />} />
+          <Route path="/edit" element={<EntityEditPage />} />
+          <Route path="/edit/:id" element={<EntityEditPage />} />
+        </Routes>
+      </AppLayout>
     </BrowserRouter>
   );
 };

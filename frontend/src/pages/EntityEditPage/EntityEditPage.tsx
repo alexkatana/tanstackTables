@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { Button } from 'antd'; 
 import { useNavigate } from 'react-router-dom';
-import { EntityForm } from '../../features/EntityForm/index';
+import { EntityForm } from '../../entities/EntityForm/index';
 import { useEntity } from '../../entities/BookCrawler/model/api';
 import styles from './styles.module.scss';
 
