@@ -1,8 +1,14 @@
 import { Form, Input, Select, Button } from 'antd';
+import { 
+  CheckCircleOutlined, 
+  ClockCircleOutlined, 
+  StopOutlined 
+} from '@ant-design/icons';
 import type { EntityFormValues } from '../model/types';
 import { apiClient } from '../../../shared/api/client';
 import { signal } from '@preact/signals-react';
-const loading = signal(false)
+
+const loading = signal(false);
 
 export const EntityForm = ({ entity }: { entity?: EntityFormValues & { id?: number } }) => {
   const [form] = Form.useForm();
@@ -19,7 +25,7 @@ export const EntityForm = ({ entity }: { entity?: EntityFormValues & { id?: numb
       loading.value = false;
     }
   };
-  
+
   return (
     <Form form={form} initialValues={entity} onFinish={onFinish}>
       <Form.Item name="name" label="Name" rules={[{ required: true }]}>
@@ -28,9 +34,15 @@ export const EntityForm = ({ entity }: { entity?: EntityFormValues & { id?: numb
 
       <Form.Item name="status" label="Status" rules={[{ required: true }]}>
         <Select>
-          <Select.Option value="active">Active</Select.Option>
-          <Select.Option value="pending">Pending</Select.Option>
-          <Select.Option value="inactive">Inactive</Select.Option>
+          <Select.Option value="active">
+              <CheckCircleOutlined style={{ color: '#52c41a', marginRight: 8 }} />
+          </Select.Option>
+          <Select.Option value="pending">
+              <ClockCircleOutlined style={{ color: '#faad14', marginRight: 8 }} />
+          </Select.Option>
+          <Select.Option value="inactive">
+              <StopOutlined style={{ color: '#ff4d4f', marginRight: 8 }} />
+          </Select.Option>
         </Select>
       </Form.Item>
 

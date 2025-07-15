@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiClient } from '@/shared/api/client';
+import { apiClient } from '../../../shared/api/client';
 import type { Entity } from '../../../entities/BookCrawler/model/types';
-import { Button, Input, Select, Space, Table } from 'antd';
+import { Button, Input, Select, Space, Table, Tooltip } from 'antd';
 import type { TableColumnsType } from 'antd';
 import { Link } from 'react-router-dom';
+import { 
+  CheckCircleOutlined, 
+  ClockCircleOutlined, 
+  StopOutlined 
+} from '@ant-design/icons';
 
 export const EntityTable: React.FC = () => {
   const queryClient = useQueryClient();
@@ -24,6 +29,12 @@ export const EntityTable: React.FC = () => {
       setEditingId(null);
     },
   });
+
+  const statusIcons = {
+    active: <CheckCircleOutlined style={{ color: '#52c41a', fontSize: '18px' }} />,
+    pending: <ClockCircleOutlined style={{ color: '#faad14', fontSize: '18px' }} />,
+    inactive: <StopOutlined style={{ color: '#ff4d4f', fontSize: '18px' }} />,
+  };
 
   const columns: TableColumnsType<Entity> = [
     {
@@ -52,13 +63,39 @@ export const EntityTable: React.FC = () => {
           value={editForm.status ?? text}
           onChange={value => setEditForm({...editForm, status: value})}
           options={[
-            { value: 'active', label: 'Active' },
-            { value: 'pending', label: 'Pending' },
-            { value: 'inactive', label: 'Inactive' },
+            { 
+              value: 'active', 
+              label: (
+                <span>
+                  <CheckCircleOutlined style={{ color: '#52c41a', marginRight: 8 }} />
+                  Active
+                </span>
+              ) 
+            },
+            { 
+              value: 'pending', 
+              label: (
+                <span>
+                  <ClockCircleOutlined style={{ color: '#faad14', marginRight: 8 }} />
+                  Pending
+                </span>
+              ) 
+            },
+            { 
+              value: 'inactive', 
+              label: (
+                <span>
+                  <StopOutlined style={{ color: '#ff4d4f', marginRight: 8 }} />
+                  Inactive
+                </span>
+              ) 
+            },
           ]}
         />
       ) : (
-        <span className={`status-${text}`}>{text}</span>
+        <Tooltip title={text.charAt(0).toUpperCase() + text.slice(1)}>
+          {statusIcons[text as keyof typeof statusIcons]}
+        </Tooltip>
       ),
     },
     {
