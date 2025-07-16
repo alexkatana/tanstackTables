@@ -1,0 +1,1 @@
+export { LayoutContent as Content } from './Content';

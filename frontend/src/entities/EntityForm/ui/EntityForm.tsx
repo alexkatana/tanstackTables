@@ -17,9 +17,9 @@ export const EntityForm = ({ entity }: { entity?: EntityFormValues & { id?: numb
     loading.value = true;
     try {
       if (entity?.id) {
-        await apiClient.put(`/entities/${entity.id}`, values);
+        await apiClient.put(`api/entities/${entity.id}`, values);
       } else {
-        await apiClient.post('/entities', values);
+        await apiClient.post('api/entities', values);
       }
     } finally {
       loading.value = false;
@@ -28,20 +28,33 @@ export const EntityForm = ({ entity }: { entity?: EntityFormValues & { id?: numb
 
   return (
     <Form form={form} initialValues={entity} onFinish={onFinish}>
-      <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+      <Form.Item 
+        name="name" 
+        label="Name" 
+        rules={[{ required: true }]}
+        style={{ width: '13%' }} 
+      >
         <Input />
       </Form.Item>
 
-      <Form.Item name="status" label="Status" rules={[{ required: true }]}>
+      <Form.Item 
+        name="status" 
+        label="Status" 
+        rules={[{ required: true }]}
+        style={{ width: '13%' }} 
+      >
         <Select>
           <Select.Option value="active">
-              <CheckCircleOutlined style={{ color: '#52c41a', marginRight: 8 }} />
+            <CheckCircleOutlined style={{ color: '#52c41a', marginRight: 8 }} />
+            Active
           </Select.Option>
           <Select.Option value="pending">
-              <ClockCircleOutlined style={{ color: '#faad14', marginRight: 8 }} />
+            <ClockCircleOutlined style={{ color: '#faad14', marginRight: 8 }} />
+            Pending
           </Select.Option>
           <Select.Option value="inactive">
-              <StopOutlined style={{ color: '#ff4d4f', marginRight: 8 }} />
+            <StopOutlined style={{ color: '#ff4d4f', marginRight: 8 }} />
+            Inactive
           </Select.Option>
         </Select>
       </Form.Item>

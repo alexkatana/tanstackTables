@@ -117,7 +117,7 @@ export const EntityTable: React.FC = () => {
             <>
               <Button onClick={() => setEditingId(record.id)}>Edit</Button>
               <Link to={`/edit/${record.id}`}>
-                <Button>Full Edit</Button>
+                <Button>Advanced</Button>
               </Link>
             </>
           )}

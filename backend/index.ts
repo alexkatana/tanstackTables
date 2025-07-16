@@ -39,6 +39,23 @@ app.put('/api/entities/:id', (req, res) => {
     res.status(404).json({ error: 'Not found' });
   }
 });
+
+app.post('/api/entities', (req, res) => {
+  if (!req.body.name) {
+    res.status(400).json({ error: 'Name is required' });
+    } 
+    const newEntity = {
+      id: entities.length + 1,
+      name: req.body.name,
+      description: req.body.description || '',
+      status: req.body.status || 'pending',
+      createdAt: new Date().toISOString(),
+    };
+
+    entities.unshift(newEntity);
+    res.json(newEntity);
+    }
+)
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);
 });
