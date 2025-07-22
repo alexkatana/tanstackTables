@@ -1,15 +1,22 @@
 .header {
-  padding: 0 24px;
-  background: #7e22ce;
-  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.title {
+  padding: 0 16px;
+  background: #722ed1; 
   color: white;
-  margin: 0;
-  font-size: 20px;
-  font-weight: 500;
+
+  .backButton {
+    color: white;
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .title {
+    color: white;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+  }
 }

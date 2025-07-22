@@ -1,25 +1,41 @@
-import { Layout, Menu } from 'antd';
-import { Link } from 'react-router-dom';
-import { HomeOutlined, EditOutlined } from '@ant-design/icons';
-import { useTheme } from '../../../app/providers/ThemeProvider';
+import { Layout, Menu, Button, Typography } from 'antd';
+import { Link, useLocation } from 'react-router-dom';
+import { HomeOutlined, EditOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import styles from './styles.module.scss';
+import { useState } from 'react';
 
 const { Sider } = Layout;
+const { Title } = Typography;
 
 export const Sidebar = () => {
-  const { isDark } = useTheme();
+  const location = useLocation();
+  const [collapsed, setCollapsed] = useState(false);
+
+  const selectedKey = location.pathname === "/edit" ? "2" : "1";
 
   return (
     <Sider
       width={200}
       className={styles.sider}
-      style={{
-        boxShadow: isDark ? '2px 0 8px rgba(0, 0, 0, 0.45)' : '2px 0 8px rgba(0, 0, 0, 0.15)'
-      }}
+      collapsible
+      collapsed={collapsed}
+      onCollapse={(value) => setCollapsed(value)}
+      trigger={null}
     >
+      <div className={styles.logoContainer}>
+        {!collapsed ? (
+          <div className={styles.logo}>
+            <Title level={3} className={styles.logoText}>ET</Title>
+            <span className={styles.logoSubtext}>EntityTable</span>
+          </div>
+        ) : (
+          <Title level={3} className={styles.collapsedLogo}>ET</Title>
+        )}
+      </div>
+
       <Menu
         mode="inline"
-        defaultSelectedKeys={['1']}
+        selectedKeys={[selectedKey]}
         className={styles.menu}
         items={[
           {
@@ -34,6 +50,17 @@ export const Sidebar = () => {
           },
         ]}
       />
+
+      <div className={styles.collapseButtonWrapper}>
+        <Button
+          type="text"
+          icon={<MenuFoldOutlined />}
+          onClick={() => setCollapsed(!collapsed)}
+          className={styles.collapseButton}
+        >
+          {!collapsed && 'Свернуть'}
+        </Button>
+      </div>
     </Sider>
   );
 };
