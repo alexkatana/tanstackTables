@@ -1,3 +1,4 @@
+import React from 'react';
 import { Form, Input, Select, Button } from 'antd';
 import { 
   CheckCircleOutlined, 
@@ -7,11 +8,13 @@ import {
 import type { EntityFormValues } from '../model/types';
 import { apiClient } from '../../../shared/api/client';
 import { signal } from '@preact/signals-react';
+import useHeader from '../../../shared/lib/useHeader'; 
 
 const loading = signal(false);
 
 export const EntityForm = ({ entity }: { entity?: EntityFormValues & { id?: number } }) => {
   const [form] = Form.useForm();
+  const { setTitle } = useHeader(); 
 
   const onFinish = async (values: EntityFormValues) => {
     loading.value = true;
@@ -26,24 +29,45 @@ export const EntityForm = ({ entity }: { entity?: EntityFormValues & { id?: numb
     }
   };
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (entity?.id) {
+      setTitle(`Entity Tables/${e.target.value}`);
+    }
+  };
+
+  React.useEffect(() => {
+    if (entity?.id && entity?.name) {
+      setTitle(`Entity Tables/${entity.name}`);
+    } else {
+      setTitle('Entity Tables');
+    }
+
+    return () => {
+      setTitle('EntityTable app by Alex');
+    };
+  }, [entity, setTitle]);
+
   return (
     <Form form={form} initialValues={entity} onFinish={onFinish}>
       <Form.Item 
         name="name" 
         label="Name" 
-        rules={[{ required: true }]}
+        rules={[{ required: true, message: 'Please input the name!' }]}
         style={{ width: '13%' }} 
       >
-        <Input />
+        <Input 
+          onChange={handleNameChange} 
+          placeholder="Enter entity name"
+        />
       </Form.Item>
 
       <Form.Item 
         name="status" 
         label="Status" 
-        rules={[{ required: true }]}
+        rules={[{ required: true, message: 'Please select status!' }]}
         style={{ width: '13%' }} 
       >
-        <Select>
+        <Select placeholder="Select status">
           <Select.Option value="active">
             <CheckCircleOutlined style={{ color: '#52c41a', marginRight: 8 }} />
             Active
@@ -59,7 +83,12 @@ export const EntityForm = ({ entity }: { entity?: EntityFormValues & { id?: numb
         </Select>
       </Form.Item>
 
-      <Button type="primary" htmlType="submit" loading={loading.value}>
+      <Button 
+        type="primary" 
+        htmlType="submit" 
+        loading={loading.value}
+        style={{ marginTop: 16 }}
+      >
         Save
       </Button>
     </Form>
